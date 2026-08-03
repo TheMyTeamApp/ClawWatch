@@ -53,7 +53,7 @@ class ClawRunner(private val context: Context) {
             "lookup", "find out", "check online", "on the web", "google"
         )
 
-        private const val DEFAULT_MODEL = "claude-opus-4-6"
+        private const val DEFAULT_MODEL = "claude-opus-5"
         private const val LEGACY_DEFAULT_SYSTEM_PROMPT =
             "You are ClawWatch, a smart and relaxed voice presence on a watch. " +
             "Respond in 1-3 short sentences maximum. No markdown, no lists, no bullet points. " +
