@@ -52,7 +52,7 @@ The NullClaw bridge matters on Wear OS because Samsung isolates child-process ne
 | [NullClaw](https://github.com/nullclaw/nullclaw) | Agent runtime (Zig, static binary) | 2.8 MB |
 | [Vosk](https://alphacephei.com/vosk/) | Offline speech-to-text | ~68 MB |
 | Android TextToSpeech | Voice output | 0 MB (pre-installed) |
-| Claude Opus 4.6 | Intelligence | cloud |
+| Claude Opus 5 | Intelligence | cloud |
 
 **Total on-device footprint: ~71 MB**
 
@@ -86,7 +86,7 @@ cp zig-out/bin/nullclaw ../ClawWatch/app/src/main/jniLibs/armeabi-v7a/libnullcla
 ```bash
 cp app/src/main/assets/nullclaw.json.example app/src/main/assets/nullclaw.json
 # Edit nullclaw.json — set your provider and model
-# Default: Anthropic + claude-opus-4-6
+# Default: Anthropic + claude-opus-5
 # The API key is NOT stored in this file — it's pushed via ADB (see Deploy)
 ```
 
@@ -227,7 +227,7 @@ The admin panel lets you:
 - **API key** — push directly to the watch with one click
 - **Tavily key** — recommended live web RAG key (free tier)
 - **Brave key** — alternative web search key
-- **Model** — switch between providers and models (claude-opus-4-6, gpt-4o, gemini, etc.)
+- **Model** — switch between providers and models (claude-opus-5, gpt-4o, gemini, etc.)
 - **Avatar selector** — choose `lobster/ant/robot/boy/girl` and push to watch
 - **Max tokens** — slider with live value
 - **RAG mode** — `off`, `auto-search`, or `opus tool use`
@@ -245,7 +245,7 @@ Edit `nullclaw.json` to change model or provider:
 ```json
 {
   "provider": "anthropic",
-  "model": "claude-opus-4-6",
+  "model": "claude-opus-5",
   "max_tokens": 150,
   "system": "Your system prompt here"
 }

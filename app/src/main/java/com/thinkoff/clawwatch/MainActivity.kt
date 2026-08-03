@@ -42,7 +42,7 @@ import kotlin.math.abs
  *   SETUP     → no API key yet, show key entry
  *   IDLE      → tap mic to start
  *   LISTENING → Vosk capturing speech, partial shown
- *   THINKING  → NullClaw + Opus 4.6 running
+ *   THINKING  → NullClaw + Opus 5 running
  *   SPEAKING  → Android TTS playing response
  */
 class MainActivity : AppCompatActivity() {
