@@ -2,6 +2,8 @@
 
 **The first intelligent AI agent running natively on a smartwatch.**
 
+A voice-controlled smartwatch agent for Wear OS: an on-device LLM assistant living on your Galaxy Watch, with offline speech recognition and no companion app in the loop.
+
 Tap. Speak. Get an answer. No cloud STT, no phone dependency, no latency from middlemen.
 
 ClawWatch bundles [NullClaw](https://github.com/nullclaw/nullclaw) `v2026.3.7` as a static ARM binary, paired with offline speech recognition (Vosk) and the built-in TTS engine. The live response path now tries NullClaw first again on every query. On Wear OS, NullClaw's `curl` calls are bridged back to the parent Kotlin app for network access, and if the native path fails or times out ClawWatch falls back to the existing Kotlin Anthropic path instead of leaving the watch stuck.
@@ -35,7 +37,7 @@ This makes ClawWatch unusually capable: it can stay in touch with both your othe
   <img src="assets/screenshots/v2/girl.png" alt="ClawWatch girl avatar" width="120">
 </p>
 
-## How it works
+## How the smartwatch AI agent works
 
 ```
 [tap mic] → Vosk STT (on-device, offline) → local command/router → NullClaw-first query path via Wear OS curl bridge → Kotlin fallback or local watch action → Android TTS → [watch speaks]
@@ -269,3 +271,5 @@ A watch has 1.5–2 GB RAM. NullClaw uses 1 MB of it. OpenClaw would need the en
 AGPL-3.0 — see [LICENSE](LICENSE)
 
 Built by [ThinkOff](https://thinkoff.io) · Powered by [NullClaw](https://github.com/nullclaw/nullclaw) · Logo by [herrpunk](https://github.com/herrpunk)
+
+*ClawWatch is a smartwatch AI assistant, a Wear OS LLM client, and an on-device voice agent for the Samsung Galaxy Watch — search for it however you like, it answers to all of them.*
