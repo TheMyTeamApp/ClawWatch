@@ -1,0 +1,67 @@
+name: Build ClawWatch APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - principal
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout ClawWatch
+        uses: actions/checkout@v4
+
+      - name: Install Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK packages
+        run: |
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Install Zig 0.15.2
+        run: |
+          curl -L https://ziglang.org/download/0.15.2/zig-x86_64-linux-0.15.2.tar.xz -o zig.tar.xz
+          tar -xf zig.tar.xz
+          echo "$PWD/zig-x86_64-linux-0.15.2" >> "$GITHUB_PATH"
+
+      - name: Build NullClaw
+        run: |
+          git clone https://github.com/nullclaw/nullclaw.git
+          cd nullclaw
+          git checkout v2026.3.7
+          zig version
+          zig build -Dtarget=arm-linux-musleabihf -Doptimize=ReleaseSmall
+          mkdir -p ../app/src/main/jniLibs/armeabi-v7a
+          cp zig-out/bin/nullclaw ../app/src/main/jniLibs/armeabi-v7a/libnullclaw.so
+
+      - name: Configure NullClaw
+        run: |
+          cp app/src/main/assets/nullclaw.json.example app/src/main/assets/nullclaw.json
+
+      - name: Download Vosk model
+        run: |
+          cd app/src/main/assets
+          curl -L https://alphacephei.com/vosk/models/vosk-model-small-en-us-0.15.zip -o vosk.zip
+          unzip -q vosk.zip
+          mv vosk-model-small-en-us-0.15 vosk-model-small-en-us
+          rm vosk.zip
+
+      - name: Build APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClawWatch-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
